@@ -1,0 +1,36 @@
+pipeline:
+  name: financial_transaction_pipeline
+  version: 1.0.0
+  batch_size: 10000
+
+logging:
+  level: INFO
+  log_dir: logs
+
+quality_thresholds:
+  null_rate_max: 0.05
+  duplicate_rate_max: 0.01
+  outlier_threshold: 3
+
+schema:
+  required_columns:
+    - transaction_id
+    - timestamp
+    - amount
+    - currency
+    - customer_id
+    - merchant_id
+    - transaction_type
+    - status
+
+database:
+  host: localhost
+  port: 5432
+  database: financial_db
+  user: postgres
+  password: password
+
+aws:
+  region: us-east-1
+  s3_bucket: financial-transactions
+  lambda_function: process-transactions
